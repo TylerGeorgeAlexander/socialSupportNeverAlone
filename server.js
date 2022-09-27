@@ -15,6 +15,7 @@ require('dotenv').config({ path: './config/.env' });
 
 // Passport config
 require('./config/passport')(passport);
+require('./config/passport2')(passport);
 
 connectDB();
 
@@ -23,8 +24,9 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(logger('dev'));
-// Sessions
-app.use(
+
+// Sessions. This needs to go BEFORE live app.use(passport.initialize());
+app.use( 
   session({
     //makes sure you have a DB connection
     secret: 'keyboard cat', //used to compute the hash - can be changed
